@@ -1,0 +1,37 @@
+{% extends "Scheduler/base.html" %}
+{% block content %}
+    <div class="history-page-wrapper">
+        <h2 class="history-page-title">Appointment History</h2>
+
+        {% if appointments %}
+            <table class="appointment-table">
+                <thead>
+                    <tr>
+                        <th class="table-header">Patient</th>
+                        <th class="table-header">Request</th>
+                        <th class="table-header">Status</th>
+                        <th class="table-header">Scheduled Date</th>
+                        <th class="table-header">Status Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr class="appointment-row">
+                        <td class="patient-name">{{ appointment.user }}</td>
+                        <td class="patient-name">{{ appointment.request }}</td>
+                        <td class="appointment-status">
+                            <span class="status-badge {% if appointment.status == 'accepted' %}status-accepted{% elif appointment.status == 'rejected' %}status-rejected{% elif appointment.status == 'ended' %}status-ended{% endif %}">
+                                {{ appointment.status|title }}
+                            </span>
+                        </td>
+                        <td class="scheduled-date">{{ appointment.appointment_date|date:"F j, Y" }}</td>
+                        <td class="status-date">{{ appointment.status_date|date:"F j, Y" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-appointments-message">No past appointments found.</p>
+        {% endif %}
+    </div>
+{% endblock %}

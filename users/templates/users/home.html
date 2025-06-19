@@ -1,0 +1,22 @@
+{% extends "Scheduler/base.html" %}
+{% load static %}
+{% block content %}
+{% block extra_css %}
+<style>
+  body {
+    background-image: url("{% static 'Users/images/doctor-and-patient.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+</style>
+{% endblock %}
+    <div class="home-container">
+        <h1 class="home-header">Welcome!</h1>
+        <div class="link-container">
+            <a href="{% url 'admin:index' %}" class="admin-btn">Go to Admin Page</a>
+            <a href="{% url 'login' %}" class="user-btn">Go to Users Page</a>
+        </div>
+    </div>
+{% endblock %}

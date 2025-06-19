@@ -1,0 +1,61 @@
+{% extends "Scheduler/base.html" %}
+{% load static %}
+{% block content %}
+<div class="appointment">
+  <div class="appointment-form-head">
+    <h2><i class="fas fa-calendar-check"></i> Book an Appointment</h2>
+    <p class="subtext">Fill in your details and we'll get back to you shortly.</p>
+  </div>
+  <div class="appointment-form">
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="appointment-selection">
+    <label for="first_name">First Name</label>
+    <input type="text" id="first_name" name="first_name" maxlength="25" placeholder="Input your first name" required />
+    <small>Max length of 25 Characters</small>
+  </div>
+  <div class="appointment-selection">
+    <label for="last_name">Last Name</label>
+    <input type="text" id="last_name" name="last_name" maxlength="25" placeholder="Input your last name" required />
+    <small>Max length of 25 Characters</small>
+  </div>
+  <div class="appointment-selection">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Input your email" required />
+  </div>
+
+  <div class="appointment-selection">
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" placeholder="Input your phone number" required />
+  </div>
+  <div class="appointment-selection">
+    <label for="doctor">Select Doctor</label>
+    <select id="doctor" name="doctor" required>
+      <option value="" disabled selected>Select a doctor</option>
+      {% for doctor in doctors %}
+        <option value="{{ doctor.id }}">{{ doctor.username }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="appointment-selection">
+    <label for="Payment">Payment Plan</label>
+    <select id="payment" name="payment" required>
+      <option value="" disabled selected>Select Payment Plan</option>
+      <option value="premium">Premium - N10000</option>
+      <option value="standard">Standard - N5000</option>
+      <option value="basic">Basic - N2000</option>
+    </select>
+  </div>
+  <div class="appointment-selection">
+    <label for="request">Your Request</label>
+    <textarea id="request" name="request" placeholder="Submit your request here..." required></textarea>
+  </div>
+  <div class="appointment-selection">
+    <label class="upload-btn" for="fileUpload">Upload a file relating to your request/issue(Optional):</label>
+    <input type="file" id="fileUpload" name="fileUpload">
+  </div>
+  <button class="select-btn" type="submit">Submit</button>
+</form>
+  </div>
+</div>
+{% endblock %}

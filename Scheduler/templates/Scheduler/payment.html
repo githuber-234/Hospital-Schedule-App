@@ -1,0 +1,18 @@
+{% extends "Scheduler/base.html" %}
+{% block content %}
+  <div class="payment-container">
+    <h2>Make Payment</h2>
+    <div class="payment-details">
+      <p><strong>Name:</strong> {{ appointment.first_name }} {{ appointment.last_name }}</p>
+      <p><strong>Email:</strong> {{ appointment.email }}</p>
+      <p><strong>Phone:</strong> {{ appointment.phone }}</p>
+      <p><strong>Payment Plan:</strong> {{ appointment.payment }}</p>
+      <p><strong>Request:</strong> {{ appointment.request }}</p>
+      <p><strong>Doctor Selected:</strong> Dr. {{ doctor.username }}</p>
+    </div>
+    <form action="{% url 'payment' appointment.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Pay for {{ appointment.payment }}</button>
+    </form>
+  </div>
+{% endblock %}

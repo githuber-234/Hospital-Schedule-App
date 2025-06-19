@@ -1,0 +1,79 @@
+{% extends "Scheduler/base.html" %}
+{% load static %}
+{% block content %}
+<section class="home" id="home">
+<div class="patient-dashboard">
+    <div class="paitent-dashboard-header">
+        <h2>Welcome User {{ user.username }} To Your Dashboard</h2>
+        <p>Patient ID: {{ user.id }}</p>
+        <p>Manage appointments, view notifications, and more.</p>
+    </div>
+
+    <div class="patient-dashboard-cards">
+        <div class="patient-dashboard-card">
+            <box-icon name='calendar-plus' class="patient-dashboard-icon"></box-icon>
+            <h4>Make Appointment</h4>
+            <p>Schedule a visit with a healthcare professional.</p>
+            <a href="{% url 'appointment' %}" class="patient-dashboard-btn">Book Now</a>
+        </div>
+        <div class="patient-dashboard-card">
+            <box-icon name='bell' type='solid' class="patient-dashboard-icon"></box-icon>
+            <h4>Notifications</h4>
+            <p>View new alerts from your doctors and health center.</p>
+            <a href="{% url 'notifications' %}" class="patient-dashboard-btn">View Notifications</a>
+        </div>
+        <div class="patient-dashboard-card">
+            <box-icon name='receipt' class="patient-dashboard-icon"></box-icon>
+            <h4>Print Receipt</h4>
+            <p>Access and print your appointment receipts.</p>
+            <a href="{% url 'receipt' %}" class="patient-dashboard-btn">Print Receipt</a>
+        </div>
+        <div class="patient-dashboard-card">
+            <box-icon name='video' type='solid' class="patient-dashboard-icon"></box-icon>
+            <h4>Video Consultation</h4>
+            <p>Meet with your doctor via secure video call.</p>
+            <a href="{% url 'patient_request_video_call' %}" class="patient-dashboard-btn">Request A Call</a>
+        </div>
+    </div>
+</div>
+<div id="contact" class="contact-container">
+    <div class="contact-left">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="contact-form-head">
+                <h2>Contact Us</h2>
+            </div>
+            <div class="contact-input">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" maxlength="25" placeholder="Input your name" required />
+            </div>
+            <div class="contact-input">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Input your email" required />
+            </div>
+            <div class="contact-input">
+                <textarea id="message" name="message" maxlength="80" placeholder="message" required></textarea>
+            </div>                
+            <button class="contact-btn" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="contact-right">
+            <a href="mailto:ad123eg456@gmail.com" class="contact-item">
+                <box-icon name='envelope'></box-icon> ad123eg456@gmail.com
+            </a>
+            <a href="tel:+2348068419918" class="contact-item">
+                <box-icon name='phone'></box-icon> +234 806 841 9918
+            </a>
+            <a href="#" class="contact-item" target="_blank">
+                <box-icon type='logo' name='github'></box-icon> Adrian
+            </a>
+            <a href="#" class="contact-item" target="_blank">
+                <box-icon type='logo' name='whatsapp'></box-icon> Adrian
+            </a>
+            <a href="#" class="contact-item" target="_blank">
+                <box-icon type='logo' name='linkedin'></box-icon> Adrian
+            </a>
+    </div>
+</div>
+</section>
+{% endblock %}

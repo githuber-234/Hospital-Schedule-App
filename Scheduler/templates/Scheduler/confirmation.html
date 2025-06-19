@@ -1,0 +1,11 @@
+{% extends "Scheduler/base.html" %}
+{% block content %}
+<div class="confirmation-container">
+  <div class="confirmation-card">
+    <h2>Appointment Booked Successfully!</h2>
+    <p>Thank you for reaching out. We'll get back to you shortly with a response.</p>
+    <a href="{% url 'patient' %}" class="confirmation-btn">Back to Home</a>
+    <a href="{% url 'receipt' %}" class="confirmation-btn">Print Receipt</a>
+  </div>
+</div>
+{% endblock %}

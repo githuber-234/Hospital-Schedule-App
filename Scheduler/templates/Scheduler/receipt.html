@@ -1,0 +1,51 @@
+{% extends "Scheduler/base.html" %}
+{% block content %}
+<h2 class="patient-receipt-header">YOUR PAYMENT RECEIPTS</h2>
+
+{% for appointment in appointments %}
+  <div class="patient-receipt">
+    <h3>PAYMENT RECEIPT</h3>
+    <p><strong>Appointment ID:</strong> {{ appointment.id }}</p>
+    <p><strong>Date:</strong> {{ appointment.date_created|date:"F d, Y h:i A" }}</p>
+    <p><strong>Transaction ID:</strong> TXN{{ appointment.phone|slice:"-4" }}{{ appointment.first_name|length }}{{ appointment.last_name|length }}</p>
+
+    <div class="patient-info-block">
+      <p><strong>Name:</strong> {{ appointment.first_name }} {{ appointment.last_name }}</p>
+      <p><strong>Email:</strong> {{ appointment.email }}</p>
+      <p><strong>Phone:</strong> {{ appointment.phone }}</p>
+      <p><strong>Payment Plan:</strong> {{ appointment.payment }}</p>
+      <p><strong>Request Description:</strong> {{ appointment.request }}</p>
+      <p><strong>Amount Paid:</strong> N{{ appointment.amount }}</p>
+      <p>{{ appointment.file }}</p>
+    </div>
+
+    <div class="patient-receipt-footer">
+      <p>Thank you for your payment.</p>
+      <p>This receipt serves as proof of your transaction.</p>
+    </div>
+
+    <div class="patient-print-container-btn no-print">
+      <button class="patient-print-btn" onclick="printReceipt(this)">Print This Receipt</button>
+    </div>
+    <hr>
+  </div>
+{% empty %}
+  <p>You have no receipts yet.</p>
+{% endfor %}
+
+<div class="btn-container no-print">
+  <a href="{% url 'patient' %}" class="patient-print-btn">Back to Home</a>
+</div>
+
+<script>
+  function printReceipt(button) {
+    const receiptDiv = button.closest('.patient-receipt');
+    const originalContent = document.body.innerHTML;
+
+    document.body.innerHTML = receiptDiv.outerHTML;
+    window.print();
+    document.body.innerHTML = originalContent;
+  }
+</script>
+
+{% endblock %}

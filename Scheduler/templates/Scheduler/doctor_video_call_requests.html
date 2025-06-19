@@ -1,0 +1,21 @@
+{% extends "Scheduler/base.html" %}
+{% block content %}
+{% load static %}
+<h2 class="video-dashboard-header">Incoming Video Call Requests</h2>
+
+{% for appointment in appointments %}
+  <div class="video-request-card">
+    <h3>Appointment with {{ appointment.first_name }} {{ appointment.last_name }}</h3>
+    <p><strong>Date:</strong> {{ appointment.date_created|date:"F d, Y" }}</p>
+    <p><strong>Email:</strong> {{ appointment.email }}</p>
+    <p><strong>Phone:</strong> {{ appointment.phone }}</p>
+    <p><strong>Request:</strong> {{ appointment.request }}</p>
+
+    <div class="video-action-btns">
+      <a href="{{ appointment.call_room_url }}" target="_blank" class="start-call-btn">Join Video Call</a>
+    </div>
+  </div>
+{% empty %}
+  <p class="no-video-requests">No video call requests yet.</p>
+{% endfor %}
+{% endblock %}

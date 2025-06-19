@@ -1,0 +1,48 @@
+{% extends "Scheduler/base.html" %}
+{% block content %}
+<h2 class="video-call-header">Accepted Appointments for Video Call</h2>
+
+{% for appointment in appointments %}
+  <div class="appointment-video-card">
+    <h3 class="card-title">Start Video Call</h3>
+    <p><strong>Appointment ID:</strong> {{ appointment.id }}</p>
+    <p><strong>Appointment Creation Date:</strong> {{ appointment.date_created|date:"F d, Y h:i A" }}</p>
+    <p><strong>Appointment Scheduled Date:</strong> {{ appointment.appointment_date|date:"F d, Y"}}</p>
+
+    <div class="appointment-video-details">
+      <p><strong>Name:</strong> {{ appointment.first_name }} {{ appointment.last_name }}</p>
+      <p><strong>Email:</strong> {{ appointment.email }}</p>
+      <p><strong>Phone:</strong> {{ appointment.phone }}</p>
+      <p><strong>Doctor:</strong> {{ appointment.doctor_selected }}</p>
+    </div>
+    
+    <div class="appointment-video-footer">
+      <form method="post" action="{% url 'request_video_call' appointment.id %}">
+        {% csrf_token %}
+        <button type="submit" class="start-call-btn">Request Call</button>
+      </form>
+      <a href="{{ appointment.call_room_url }}" target="_blank" class="start-call-btn">Join Video Call</a>
+    </div>
+    <hr>
+  </div>
+{% empty %}
+  <p class="no-appointments-msg">No accepted appointments available for a video call.</p>
+
+<div class="video-navigation-btns">
+  <a href="{% url 'patient' %}" class="back-btn">Back to Home</a>
+</div>
+
+{% if request.method == 'POST' %}
+  <div class="modal">
+    <div class="modal-content">
+      <h3>Video Call Payment</h3>
+      <p>Please pay $50 to request a video call.</p>
+      <form method="post" action="{% url 'request_video_call_payment' appointment.id %}">
+          {% csrf_token %}
+          <button type="submit" class="pay-btn">Pay $50</button>
+      </form>
+    </div>
+  </div>
+{% endif %}
+{% endfor %}
+{% endblock %}

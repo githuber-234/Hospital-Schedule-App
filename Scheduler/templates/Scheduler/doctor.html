@@ -1,0 +1,64 @@
+{% extends "Scheduler/base.html" %}
+{% block content %}
+<div class="doctor-dashboard">
+  <h2>Welcome, Dr. {{ user.username }}</h2>
+  <p class="subtitle">Here are the latest appointment requests:</p>
+
+  {% if appointments %}
+<div class="appointments-list">
+  {% for appointment in appointments %}
+ <div class="appointment-card mb-3">
+  <button 
+    class="btn btn-light w-100 text-start d-flex align-items-center justify-content-between" 
+    type="button" 
+    onclick="toggleDetails('appointmentDetails{{ appointment.id }}')">
+    Appointment request from {{ appointment.first_name }} {{ appointment.last_name }}
+  </button>
+  <div class="collapse-content" id="appointmentDetails{{ appointment.id }}" style="display: none;">
+    <div class="card card-body">
+      <p><strong>Name:</strong> {{ appointment.first_name }}</p>
+      <p><strong>Email:</strong> {{ appointment.email }}</p>
+      <p><strong>Phone:</strong> {{ appointment.phone }}</p>
+      <p><strong>Payment Plan:</strong> {{ appointment.payment }}</p>
+      <p><strong>Request:</strong> {{ appointment.request }}</p>
+      <p><strong>Date:</strong> {{ appointment.date_created|date:"M d, Y - H:i" }}</p>
+          {% if appointment.file %}
+        <p><strong>File:</strong> 
+            <h3 class="file-name-header">{{ appointment.file }}</h3>
+            <a href="{{ appointment.file.url }}" target="_blank">Download File</a>
+        </p>
+    {% else %}
+        <p><strong>File:</strong> No file attached.</p>
+    {% endif %}
+<div class="accept-reject">
+  <form method="post" action="{% url 'handle_appointment' appointment.id %}?action=accept">
+  {% csrf_token %}
+  <label for="appointment_date{{ appointment.id }}" class="appointment-date-label">Appointment Date:</label>
+  <input type="date" name="appointment_date" id="appointment_date{{ appointment.id }}" class="form-control" required>
+  <button class="accept-btn" type="submit">Accept</button>
+</form>
+<form method="post" action="{% url 'handle_appointment' appointment.id %}?action=reject">
+  {% csrf_token %}
+  <button type="submit" class="reject-btn">Reject</button>
+</form>
+</div>
+    </div>
+  </div>
+</div>
+  {% endfor %}
+</div>
+  {% else %}
+    <p>No pending appointment requests.</p>
+  {% endif %}
+</div>
+<script>
+  function toggleDetails(appointmentId) {
+    var content = document.getElementById(appointmentId);
+    if (content.style.display === "none" || content.style.display === "") {
+      content.style.display = "block";
+    } else {
+      content.style.display = "none";
+    }
+  }
+</script>
+{% endblock %}

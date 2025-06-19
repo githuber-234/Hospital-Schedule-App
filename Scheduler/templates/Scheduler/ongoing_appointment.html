@@ -1,0 +1,43 @@
+{% extends "Scheduler/base.html" %}
+{% block content %}
+{% if appointments %}
+<div class="ongoing-appointment-container">
+    <h2 class="ongoing-appointment-header">Ongoing Appointments</h2>
+    <table class="ongoing-appointment-table">
+        <thead>
+            <tr>
+                <th class="ongoing-table-header">Appointment ID</th>
+                <th class="ongoing-table-header">Patient</th>
+                <th class="ongoing-table-header">Request</th>
+                <th class="ongoing-table-header">Scheduled Date</th>
+                <th class="ongoing-table-header">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr class="ongoing-appointment-row">
+                <td class="appointment-id">{{ appointment.id }}</td>
+                <td class="patient-name">{{ appointment.user }}</td>
+                <td class="appointment-request">{{ appointment.request }}</td>
+                <td class="appointment-date">{{ appointment.appointment_date }}</td>
+                <td class="appointment-action">
+                    <form method="post" action="{% url 'handle_appointment' appointment.id %}?action=end">
+                        {% csrf_token %}
+                        <button type="submit" class="end-btn">End Appointment</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="no-appointments-msg">No ongoing appointments available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+        {% else %}
+            <p class="no-appointments-message">You have no ongoing appointments.</p>
+        {% endif %}
+    </div>
+{% endblock %}
