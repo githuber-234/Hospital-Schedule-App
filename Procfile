@@ -1,0 +1,1 @@
+web: gunicorn Hospital_Scheduler.wsgi
