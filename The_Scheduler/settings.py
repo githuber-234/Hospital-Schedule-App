@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SK")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['hospital-scheduler.onrender.com', '127.0.0.1', 'localhost']
 
@@ -137,3 +137,4 @@ EMAIL_HOST_USER = config("EADDRESS")
 EMAIL_HOST_PASSWORD = config("EPASSWORD")
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
