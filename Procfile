@@ -1,1 +1,1 @@
-web: gunicorn Hospital_Scheduler.wsgi
+web: gunicorn The_Scheduler.wsgi
